@@ -2,19 +2,18 @@ var path = require("path");
 var webpack = require("webpack");
 
 var PATHS = {
-    entryPoint: path.resolve(__dirname, 'src/index.ts'),
-    bundles: path.resolve(__dirname, '_bundles'),
+    entryPoint: path.resolve(__dirname, 'index.ts'),
+    bundles: path.resolve(__dirname, 'dist'),
 }
 
 var config = {
     entry: {
         'ngx-subscribe': [PATHS.entryPoint],
-        'ngx-subscribe.min': [PATHS.entryPoint]
     },
 
     output: {
         path: PATHS.bundles,
-        filename: '[name].js',
+        filename: '[name].umd.js',
         libraryTarget: 'umd',
         library: 'ngx-subscribe',
         umdNamedDefine: true
@@ -26,16 +25,12 @@ var config = {
 
     devtool: 'source-map',
 
-    externals: [
-        'rxjs'
-    ],
+    externals: {
+        'rxjs/Observable': { root: 'Rx.Observable', commonjs: 'rxjs/Observable', commonjs2: 'rxjs/Observable', amd: 'rxjs/Observable' },
+        'rxjs/Subscription': { root: 'Rx.Subscription', commonjs: 'rxjs/Subscription', commonjs2: 'rxjs/Subscription', amd: 'rxjs/Subscription' },
+    },
 
     plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-            minimize: true,
-            sourceMap: true,
-            include: /\.min\.js$/,
-        })
     ],
 
     module: {
@@ -54,3 +49,10 @@ var config = {
 }
 
 module.exports = config;
+
+
+        new webpack.optimize.UglifyJsPlugin({
+            minimize: true,
+            sourceMap: true,
+            include: /\.min\.js$/,
+        })

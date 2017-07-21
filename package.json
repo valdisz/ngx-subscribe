@@ -2,11 +2,13 @@
   "name": "ngx-subscribe",
   "version": "1.0.4",
   "description": "Subscribe decorator to be used in Angular 2+ components, it will automatically subscribe and cleanup observables to component properties.",
-  "main": "lib/index.js",
-  "module": "lib-esm/index.js",
+  "main": "./dist/ngx-subscribe.umd.js",
+  "module": "./lib/index.js",
+  "typings": "./lib/index.d.ts",
+  "types": "./lib/index.d.ts",
   "scripts": {
-    "clean": "shx rm -rf _bundles lib lib-esm",
-    "build": "npm run clean && tsc && tsc -m es6 --outDir lib-esm && webpack"
+    "clean": "shx rm -rf dist lib lib-esm",
+    "build": "npm run clean && tsc && tsc -m es6 --outDir lib-esm && webpack --config webpack.config.js && webpack --config webpack.config.min.js"
   },
   "repository": {
     "type": "git",
@@ -36,6 +38,5 @@
     "shx": "^0.2.2",
     "typescript": "^2.4.2",
     "webpack": "^3.3.0"
-  },
-  "typings": "lib/index.d.ts"
+  }
 }

@@ -1,4 +1,5 @@
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
 interface Shadow {
     __subs?: { [prop: string]: Subscription };
@@ -68,6 +69,7 @@ export function Subscribe(defaultValue?: any): any {
             set: function(value: any) {
                 const self = this;
 
+                console.log('observable is ', Observable);
                 unsubscribe(self, propertyKey);
                 if (value instanceof Observable) {
                     subscribe(self, propertyKey, value);
