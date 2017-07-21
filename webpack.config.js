@@ -26,6 +26,10 @@ var config = {
 
     devtool: 'source-map',
 
+    externals: [
+        'rxjs'
+    ],
+
     plugins: [
         new webpack.optimize.UglifyJsPlugin({
             minimize: true,
