@@ -7,7 +7,7 @@ Subscribe decorator to be used in Angular 2+ components, it will automatically s
 Motivation
 ----------
 
-Allows to avoid boilerplate code when working with many ovservables. Decorator will subscribe to observable and unsubscribe from it when component will be destroyed. No need to use `async` pipe in the views. Supports inheritance.
+Allows to avoid boilerplate code when working with many observables. Decorator will subscribe to observable and unsubscribe from it when component will be destroyed. No need to use `async` pipe in the views. Supports inheritance.
 
 
 Installation
