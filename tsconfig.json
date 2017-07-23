@@ -10,8 +10,11 @@
         "sourceMap": true,
         "declaration": true
     },
-    "files": [
-        "./index.ts"
+    "include": [
+        "./**/*.ts"
+    ],
+    "exclude": [
+        "node_modules"
     ],
     "compileOnSave": false,
     "buildOnSave": false
