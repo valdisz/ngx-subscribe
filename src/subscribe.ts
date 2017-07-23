@@ -71,7 +71,9 @@ export function Subscribe(defaultValue?: any): any {
 
                 console.log('observable is ', Observable);
                 unsubscribe(self, propertyKey);
-                if (value instanceof Observable) {
+
+                // looks like Observable?
+                if (value instanceof Observable || value.subscribe) {
                     subscribe(self, propertyKey, value);
                 } else {
                     setValue(self, propertyKey, value);

@@ -35,14 +35,13 @@ var config = {
 
     module: {
         loaders: [{
-            test: /\.tsx?$/,
-            loader: 'awesome-typescript-loader',
+            test: /\.ts$/,
+            loader: 'ts-loader',
             exclude: /node_modules/,
-            query: {
-                // we don't want any declaration file in the bundles
-                // folder since it wouldn't be of any use ans the source
-                // map already include everything for debugging
-                declaration: false,
+            options: {
+                compilerOptions: {
+                    declaration: false
+                }
             }
         }]
     }
