@@ -1,3 +1,5 @@
+[![npm version](https://badge.fury.io/js/ngx-subscribe.svg)](https://badge.fury.io/js/ngx-subscribe)
+
 ngx-subscribe
 =============
 
