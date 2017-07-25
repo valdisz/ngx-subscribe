@@ -69,7 +69,6 @@ export function Subscribe(defaultValue?: any): any {
             set: function(value: any) {
                 const self = this;
 
-                console.log('observable is ', Observable);
                 unsubscribe(self, propertyKey);
 
                 // looks like Observable?
