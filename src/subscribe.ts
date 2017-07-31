@@ -1,7 +1,12 @@
+import { ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
-interface Shadow {
+export interface Subscribable {
+    changeDetector: ChangeDetectorRef;
+}
+
+interface Shadow extends Subscribable {
     __subs?: { [prop: string]: Subscription };
     __value?: { [prop: string]: any };
     __unsubscribeAll();
@@ -11,7 +16,10 @@ interface Shadow {
 function setValue(shadow: Shadow, prop: string, value: any) {
     if (!shadow.__value) shadow.__value = { };
 
-    shadow.__value[prop] = value;
+    if (shadow.__value[prop] !== value) {
+        shadow.__value[prop] = value;
+        if (shadow.changeDetector) shadow.changeDetector.markForCheck();
+    }
 }
 
 function getValue(shadow: Shadow, prop: string, defaultValue?: any): any {
