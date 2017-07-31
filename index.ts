@@ -1,1 +1,1 @@
-export { Subscribe } from './src/subscribe';
+export { Subscribe, Subscribable } from './src/subscribe';
