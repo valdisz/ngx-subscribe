@@ -31,7 +31,7 @@ Usage
 ### `demo.component.ts`
 
 ```typescript
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { Http } from '@angular/http';
 import { Subscribe } from 'ngx-subscribe';
 
@@ -39,9 +39,11 @@ import { Subscribe } from 'ngx-subscribe';
     select: 'demo',
     templateUrl: 'demo.component.html'
 })
-export class DemoComponent {
-    constructor(private _http: Http) {
-
+export class DemoComponent implements WithSubscriptions {
+    constructor(
+        public changeDetector: ChangeDetectorRef,   // need that for OnPush change detection strategy to work correctly
+        private _http: Http
+    ) {
     }
 
     @Subscribe() pagesCount = this._http
