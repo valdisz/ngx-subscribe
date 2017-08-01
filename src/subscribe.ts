@@ -2,6 +2,9 @@ import { ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
+/**
+ * Describes expected component interface when it uses Subscribe decorators.
+ */
 export interface WithSubscriptions {
     changeDetector: ChangeDetectorRef;
 }
@@ -61,6 +64,15 @@ function onDestroy() {
     self.__unsubscribeAll();
 }
 
+function likeObservable(maybeObservable: Observable<any>): boolean {
+    return !!maybeObservable && typeof(maybeObservable.subscribe) === 'function';
+}
+
+/**
+ * Will define property which will subscribe to the given Observable on set and will return last emited value on get.
+ *
+ * @param defaultValue Default value which will be used till observable will emit its value for the first time.
+ */
 export function Subscribe(defaultValue?: any): any {
     return function (target: any, propertyKey: string) {
         const proto = target.constructor.prototype;
