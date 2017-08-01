@@ -2,11 +2,11 @@ import { ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
-export interface Subscribable {
+export interface WithSubscriptions {
     changeDetector: ChangeDetectorRef;
 }
 
-interface Shadow extends Subscribable {
+interface Shadow extends WithSubscriptions {
     __subs?: { [prop: string]: Subscription };
     __value?: { [prop: string]: any };
     __unsubscribeAll();

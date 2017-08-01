@@ -39,7 +39,7 @@ import { Subscribe } from 'ngx-subscribe';
     select: 'demo',
     templateUrl: 'demo.component.html'
 })
-export class DemoComponent implements Subscribable {
+export class DemoComponent implements WithSubscriptions {
     constructor(
         public changeDetector: ChangeDetectorRef,   // need that for OnPush change detection strategy to work correctly
         private _http: Http
