@@ -92,7 +92,7 @@ export function Subscribe(defaultValue?: any): any {
                 unsubscribe(self, propertyKey);
 
                 // looks like Observable?
-                if (value instanceof Observable || value.subscribe) {
+                if (likeObservable(value)) {
                     subscribe(self, propertyKey, value);
                 } else {
                     setValue(self, propertyKey, value);
