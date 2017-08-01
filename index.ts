@@ -1,1 +1,1 @@
-export { Subscribe, Subscribable } from './src/subscribe';
+export { Subscribe, WithSubscriptions } from './src/subscribe';
