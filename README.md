@@ -33,7 +33,7 @@ Usage
 ```typescript
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { Http } from '@angular/http';
-import { Subscribe } from 'ngx-subscribe';
+import { Subscribe, WithSubscriptions } from 'ngx-subscribe';
 
 @Component({
     select: 'demo',
