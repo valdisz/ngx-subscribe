@@ -1,7 +1,15 @@
+import { ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
-interface Shadow {
+/**
+ * Describes expected component interface when it uses Subscribe decorators.
+ */
+export interface WithSubscriptions {
+    changeDetector: ChangeDetectorRef;
+}
+
+interface Shadow extends WithSubscriptions {
     __subs?: { [prop: string]: Subscription };
     __value?: { [prop: string]: any };
     __unsubscribeAll();
@@ -11,7 +19,10 @@ interface Shadow {
 function setValue(shadow: Shadow, prop: string, value: any) {
     if (!shadow.__value) shadow.__value = { };
 
-    shadow.__value[prop] = value;
+    if (shadow.__value[prop] !== value) {
+        shadow.__value[prop] = value;
+        if (shadow.changeDetector) shadow.changeDetector.markForCheck();
+    }
 }
 
 function getValue(shadow: Shadow, prop: string, defaultValue?: any): any {
@@ -53,6 +64,15 @@ function onDestroy() {
     self.__unsubscribeAll();
 }
 
+function likeObservable(maybeObservable: Observable<any>): boolean {
+    return !!maybeObservable && typeof(maybeObservable.subscribe) === 'function';
+}
+
+/**
+ * Will define property which will subscribe to the given Observable on set and will return last emited value on get.
+ *
+ * @param defaultValue Default value which will be used till observable will emit its value for the first time.
+ */
 export function Subscribe(defaultValue?: any): any {
     return function (target: any, propertyKey: string) {
         const proto = target.constructor.prototype;
@@ -72,7 +92,7 @@ export function Subscribe(defaultValue?: any): any {
                 unsubscribe(self, propertyKey);
 
                 // looks like Observable?
-                if (value instanceof Observable || value.subscribe) {
+                if (likeObservable(value)) {
                     subscribe(self, propertyKey, value);
                 } else {
                     setValue(self, propertyKey, value);
