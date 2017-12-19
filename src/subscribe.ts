@@ -25,8 +25,14 @@ function setValue(shadow: Shadow, prop: string, value: any) {
     }
 }
 
-function getValue(shadow: Shadow, prop: string, defaultValue?: any): any {
-    if (!shadow.__value) return defaultValue;
+function isFunction(obj) {
+    return !!(obj && obj.constructor && obj.call && obj.apply);
+}
+
+function getValue(shadow: Shadow, prop: string, defaultValue?: Function|any): any {
+    if (!shadow.__value) {
+        return isFunction(defaultValue) ? defaultValue() : defaultValue;
+    }
 
     return shadow.__value[prop];
 }
@@ -73,7 +79,7 @@ function likeObservable(maybeObservable: Observable<any>): boolean {
  *
  * @param defaultValue Default value which will be used till observable will emit its value for the first time.
  */
-export function Subscribe(defaultValue?: any): any {
+export function Subscribe(defaultValue?: Function|any): any {
     return function (target: any, propertyKey: string) {
         const proto = target.constructor.prototype;
         if (!proto['__unsubscribeAll']) {
